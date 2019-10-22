@@ -8,17 +8,22 @@ stream 代表了一个无边界的、持续更新的数据集，一个 stream �
 
 ## stream processing application
 
-Your stream processing application doesn't run inside a broker. Instead, it runs in a separate JVM instance, or in a separate cluster entirely.
+stream 处理应用并不运行在 broker 中，而是运行在不同的独立 JVM 实例或者单独的集群中。
+<div align="center">
+    <img src="https://docs.confluent.io/current/_images/streams-apps-not-running-in-brokers.png"
+    alt="stream processing application" width="50%">
+</div>
 
-stream processing application 架构图：https://docs.confluent.io/current/_images/streams-apps-not-running-in-brokers.png
 
 ## stream 架构
 
-![架构图](https://docs.confluent.io/current/_images/streams-architecture-overview.jpg)
+<div align="center">
+<img src="https://docs.confluent.io/current/_images/streams-architecture-overview.jpg" width="50%" >
+</div>
 
 ## 处理器拓扑结构
 
-A processor topology or simply topology defines the stream processing computational logic for your application, i.e., how input data is transformed into output data. A topology is a graph of stream processors (nodes) that are connected by streams (edges) or shared state stores. There are two special processors in the topology:
+处理器拓扑图或者简单拓扑图定义了你的应用的流处理计算逻辑，例如，输入数据如何转换成输出数据。拓扑是由流（边）或共享状态存储连接的流处理器（节点）的构成的图. 在拓扑中有两个特殊的处理器:
 - source processor
 - sink processor
 
