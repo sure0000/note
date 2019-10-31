@@ -1,3 +1,12 @@
+## kafkaScheduler.scala
+## logManager
+## createReplicaManager
+## KafkaController
+## kafkaMetricReporters.scala
+## JmxReporter
+## DelegationTokenCache
+
+
 offset 记录
 kafka 集群
 kafka 时间戳
