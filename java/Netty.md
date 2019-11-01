@@ -35,3 +35,30 @@ netty有一个名为channel的通用异步i/o接口，它抽象出点对点通�
 对于事件驱动的应用程序，必须有定义良好且可扩展的事件模型。NETY有一个定义在I/O上的定义良好的事件模型，它还允许您实现自己的事件类型而不破坏现有代码，因为每个事件类型都是通过严格的类型层次结构与其他事件类型区分开来的。
 
 一个 ChannelEvent 在一个 ChannelPipeline 中被一系列 ChannelHandler 处理，管道实现了拦截过滤器模式的高级形式，使用户可以完全控制如何处理事件以及管道中的处理程序如何相互交互。
+
+```java
+// you can define what to do when data is read from a socket:
+
+public class MyReadHandler implements SimpleChannelHandler {
+     public void messageReceived(ChannelHandlerContext ctx, MessageEvent evt) {
+            Object message = evt.getMessage();
+         // Do something with the received message.
+            ...
+ 
+            // And forward the event to the next handler.
+            ctx.sendUpstream(evt);
+        }
+ }
+// You can also define what to do when a handler receives a write request:
+
+  public class MyWriteHandler implements SimpleChannelHandler {
+      public void writeRequested(ChannelHandlerContext ctx, MessageEvent evt) {
+            Object message = evt.getMessage();
+       // Do something with the message to be written.
+            ...
+
+            // And forward the event to the next handler.
+        ctx.sendDownstream(evt);
+        }
+}
+ ```
