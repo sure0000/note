@@ -1,1 +1,1 @@
-![architecture](../static/img/yarn.png)
+![architecture](../img/yarn.png)
