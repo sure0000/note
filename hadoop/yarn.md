@@ -1,8 +1,10 @@
-> The fundamental idea of YARN is to split up the functionalities of resource management and job scheduling/monitoring into separate daemons. The idea is to have a global `ResourceManager` (RM) and per-application `ApplicationMaster` (AM). An application is either a single job or a DAG of jobs.
+# Yarn
+
+The fundamental idea of YARN is to split up the functionalities of resource management and job scheduling/monitoring into separate daemons. The idea is to have a global `ResourceManager` (RM) and per-application `ApplicationMaster` (AM). An application is either a single job or a DAG of jobs.
 
 ## Architecture
 <div align="center"> 
-    <img src="../zzzimg/hadoop/yarn.png" alt="yarn" width="30%"/>
+    <img src="../zzzimg/hadoop/yarn.png" alt="yarn" width="50%"/>
 </div>
 
 ## Components
@@ -97,7 +99,7 @@ ResourceManager Restart feature is divided into two phases:
 ## ResourceManager High Availability
 
 <div align="center">
-    <img src="../zzzimg/hadoop/yarn_failover.png" width="30%" />
+    <img src="../zzzimg/hadoop/yarn_failover.png" width="50%" />
 </div>
 
 **RM failover**
@@ -195,7 +197,7 @@ As part of launching this container, the AM has to specify the ContainerLaunchCo
 environment, etc.
 
 <div align="center">
-    <img src="../zzzimg/hadoop/yarn_submit_job.png" width="30%"/>
+    <img src="../zzzimg/hadoop/yarn_submit_job.png" width="50%"/>
 </div>
 
 ## NodeManager
@@ -225,7 +227,7 @@ using the loaded state.
 > The ReservationSystem is a component of the YARN ResourceManager.
 
 <div align="center">
-    <img src="../zzzimg/hadoop/Flow&#32;of&#32;a&#32;Reservation.png" width="30%"/>
+    <img src="../zzzimg/hadoop/Flow&#32;of&#32;a&#32;Reservation.png" width="50%"/>
 </div>
 
 With reference to the figure above, a typical reservation proceeds as follows:
