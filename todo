@@ -1,16 +1,8 @@
-## kafkaScheduler.scala
-## logManager
-## createReplicaManager
+
 ## KafkaController
 ## kafkaMetricReporters.scala
 ## JmxReporter
-## DelegationTokenCache
 
-
-offset 记录
-kafka 集群
-kafka 时间戳
-kafka stream 代码
 
 azkaban
 kettle
@@ -24,11 +16,7 @@ bean factory configuration 过程？
 beans 包如何配置 bean?
 如何配置独立 bean 与单例 bean?
 
-拦截连模式
-前端控制模式
-策略模式
-责任链模式
+
 装饰器模式
 建造模式
-适配器模式
 观察者模式
