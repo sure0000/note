@@ -12,8 +12,8 @@ Referencing the HDFS configuration in the Flink configuration is deprecated.
 export HADOOP_CLASSPATH=`hadoop classpath`
 ```
 3. Putting the required jar files into /lib directory of the Flink distribution
-   1. (Flink-shaded)[https://flink.apache.org/downloads.html#flink-shaded]
-   2. sli4j
+   - [Flink-shaded](https://flink.apache.org/downloads.html#flink-shaded)
+   - sli4j
 
 ## Submit job with Yarn
 
