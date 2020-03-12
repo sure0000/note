@@ -21,5 +21,3 @@ java-jsch execute command by non login and non interactive, so can't get the env
 ## java-jsch can not execute shell 
 
 use command: `nohup  command >file 2>&1 &`
-
-[java Test](../flink/Test.java)
