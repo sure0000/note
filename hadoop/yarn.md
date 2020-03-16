@@ -1,6 +1,6 @@
 # Yarn
 
-The fundamental idea of YARN is to split up the functionalities of resource management and job scheduling/monitoring into separate daemons. The idea is to have a global `ResourceManager` (RM) and per-application `ApplicationMaster` (AM). An application is either a single job or a DAG of jobs.
+The fundamental idea of YARN is to split up the functionalities of `resource management` and `job scheduling/monitoring` into separate daemons. The idea is to have a global `ResourceManager` (RM) and per-application `ApplicationMaster` (AM). An application is either a single job or a DAG of jobs.
 
 ## Architecture
 <div align="center"> 
