@@ -32,9 +32,10 @@ RDD全称叫做弹性分布式数据集(Resilient Distributed Datasets)，它是
 
 ## RDD 数据结构
 
-RDD 的属性主要包括（rddname、sparkcontext、sparkconf、parent、dependency、partitioner、checkpoint、storageLevel）
+RDD 的属性主要包括（rddname、sparkcontext、sparkconf、parent、dependency、partitioner、parttions、checkpoint、storageLevel）
 
 <div align="center">
+    <img src="../zzzimg/spark/rdd&#32;parttions.png" width="50%" />
     <img src="../zzzimg/spark/rdd.png" width="50%" />
 </div>
 
@@ -66,9 +67,13 @@ SparkContext为Spark job的入口，由Spark driver创建在client端，包括�
 rdd存储的level，即通过storagelevel和是否可覆盖判断，
 storagelevel分为 5中状态 ，useDisk, useMemory, useOffHeap, deserialized, replication 可组合使用。
 
+**parttions**
+
+Spark RDD是被分区的，`在生成RDD时候`，一般可以指定分区的数量，如果不指定分区数量，当RDD从集合创建时候，则默认为该程序所分配到的资源的CPU核数，如果是从HDFS文件创建，默认为文件的Block数。
+
 **partitioner 分区方式**
 
-RDD的分区方式。RDD的分区方式主要包含两种（Hash和Range），这两种分区类型都是针对K-V类型的数据。如是非K-V类型，则分区为None。 Hash是以key作为分区条件的散列分布，分区数据不连续，极端情况也可能散列到少数几个分区上，导致数据不均等；Range按Key的排序平衡分布，分区内数据连续，大小也相对均等。
+`shuffle 阶段RDD的分区方式`。RDD的分区方式主要包含两种（Hash和Range），这两种分区类型都是针对K-V类型的数据。如是非K-V类型，则分区为None。 Hash是以key作为分区条件的散列分布，分区数据不连续，极端情况也可能散列到少数几个分区上，导致数据不均等；Range按Key的排序平衡分布，分区内数据连续，大小也相对均等。
 
 **checkpoint**
 
