@@ -9,6 +9,8 @@ Stack 管理的服务可以在 `/var/lib/ambari-server/resources/common-services
 >
 > 当有多个版本的 stacks 都需要某个服务时，将其定义在 common-services 目录下. 例如几乎所有版本的 stacks 都需要 HDFS，与其在每个版本 stacks 中重新定义，不如在 common-services 中定义一个。如果一个服务永远不会被共享，那就可以定义在 stacks 目录下。
 
+**任何在 common-service 中定义的服务都必须在 stacks 中引用。**
+
 ## Stack Properties
 
 ambari-server/resources/stacks/HDP/2.0.6/properties 目录下必须包含：`stack_features.json and stack_tools.json`,并且不能这两个配置文件不能存在于其他版本下，如不能存在于 HDP/2.1/目录下。
