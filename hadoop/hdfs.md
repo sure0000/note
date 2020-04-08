@@ -62,6 +62,32 @@ HDFS高可用性特性通过提供在同一集群中运行两个（从3.0.0开�
 
 `注意`，在HA集群中，备用NameNodes还执行命名空间状态的检查点，因此无需在HA集群中运行辅助 NameNode、检查点node或BackupNode。事实上，这样做是错误的。这还允许正在将非启用HA的HDFS集群重新配置为启用HA的人重用以前专用于 Secondary NameNode 的硬件。
 
+**部署**
+
+与联邦配置类似，HA配置是向后兼容的，允许现有的单个NameNode配置在没有更改的情况下工作。新配置的设计使得集群中的所有节点可能具有相同的配置，而无需根据节点的类型将不同的配置文件部署到不同的计算机。
+
+就像 HDFS Federation, HA clusters 重用 nameservice ID 去识别 HDFS instance. 另外，一个新的抽象被称作 NameNode ID 随着 HA 被添加，用于在集群中去识别不同的 NameNode. 为了支持所有NameNodes的单个配置文件，相关的配置参数以nameservice ID和NameNode ID作为后缀。
+
+具体在 hdfs-site.xml 中的配置项如下：
+- dfs.nameservices： 这个新命名服务的逻辑名称
+- dfs.ha.namenodes.[nameservice ID]：在命名服务中每个 NameNode 的唯一标识
+- dfs.namenode.rpc-address.[nameservice ID].[name node ID]：要侦听的每个NameNode的完全限定的RPC地址
+- dfs.namenode.http-address.[nameservice ID].[name node ID] - 要侦听的每个NameNode的完全限定的http地址
+- dfs.namenode.shared.edits.dir：NameNodes 将要写入读取 edits 的一组 JNs 的标识地址 
+- dfs.client.failover.proxy.provider.[nameservice ID]: HDFS clients 用于联系 Active NameNode 的 java 类
+- dfs.ha.fencing.methods：用于在 active namenode 发生 failover 时获取 active NameNode 数据的脚本或者 java 类列表，自带的两种方式有 shell and sshfence
+  
+**Automatic Failover**
+
+> 以上的章节描述了如何配置人工 failover，人工模式下这个系统不会自动触发一个从 active 到 standby namenode 的 failover 过程,即使 active node 已经失败。
+> Automatic failover 添加两个新的组件到 HDFS 部署: ZooKeeper quorum 与 ZKFailoverController process (abbreviated as ZKFC).
+
+自动HDFS故障转移的实现依赖于ZooKeeper完成以下任务：
+- 失败检测
+- Active NameNode 选举
+- 健康监控
+- ZooKeeper session 管理
+- ZooKeeper-based 选举
 
 
 
