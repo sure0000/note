@@ -1,0 +1,52 @@
+#
+# The primary way of configuring a node is via this file. This template lists
+# the most important settings you may want to configure for a production cluster.
+#
+# Please consult the documentation for further information on configuration options:
+# https://www.elastic.co/guide/en/elasticsearch/reference/index.html
+#
+# ---------------------------------- Cluster -----------------------------------
+cluster.name: elasticsearch
+# ------------------------------------ Node ------------------------------------
+node.name: esnode-1
+node.master: true
+node.data: true
+# ----------------------------------- Paths ------------------------------------
+path.data: /data0/esdata,/data1/esdata,/data2/esdata,/data3/esdata,/data4/esdata,/data5/esdata,/data6/esdata
+path.logs: /data0/log/elasticsearch
+# ----------------------------------- Memory -----------------------------------
+#bootstrap.memory_lock: true
+# ---------------------------------- Network -----------------------------------
+network.host: 0.0.0.0
+http.port: 9200
+transport.tcp.port: 9300
+# --------------------------------- Discovery ----------------------------------
+discovery.zen.ping.unicast.hosts: ["10.1.3.123", "10.1.3.124", "10.1.3.125"]    #设置单播发现host（推荐设置所有的 master-eligible node
+discovery.zen.ping_timeout: 100s                      #节点发现相关，ping过程 集群的主节点要么当选要么加入集群
+discovery.zen.fd.ping_retries: 3                      #有多少ping失败/超时导致被视为一个节点失败。默认为3 
+discovery.zen.fd.ping_interval: 3s              #多久一个节点被ping。默认为1s
+discovery.zen.fd.ping_timeout: 30s              #故障检测 等待多久ping响应，默认为 30s
+discovery.zen.minimum_master_nodes: 2    #最少发现存在master资格的节点数
+index.codec: best_compression
+# ---------------------------------- Gateway -----------------------------------
+#gateway.recover_after_nodes: 3
+#
+# ---------------------------------- Various -----------------------------------
+action.destructive_requires_name: true        #删除索引的时候不予许通配符，只能指定索引名删除
+
+# ----------------- 使用head等插件监控集群信息，需要打开以下配置项 -------------
+http.compression: true
+http.cors.enabled: true
+http.cors.allow-origin: \"*\"
+
+# --for x-pack --
+xpack.security.enabled: true
+xpack.security.transport.ssl.enabled: true
+xpack.security.transport.ssl.verification_mode: certificate
+xpack.security.transport.ssl.keystore.path: certs/elastic-certificates.p12
+xpack.security.transport.ssl.truststore.path: certs/elastic-certificates.p12
+
+xpack.security.http.ssl.enabled: false
+xpack.security.http.ssl.keystore.path: certs/elastic-certificates.p12
+xpack.security.http.ssl.truststore.path: certs/elastic-certificates.p12
+
