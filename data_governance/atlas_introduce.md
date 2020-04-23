@@ -37,10 +37,10 @@
 ## 架构
 
 <div align="center">
-    <img src="../../zzzimg/hadoop/atlas-architecture.png" width="50%" />
+    <img src="../zzzimg/hadoop/atlas-architecture.png" width="50%" />
 </div>
 
-### core
+## core
 
 **Type 系统**
 
@@ -50,7 +50,7 @@ atlas 允许用户为他们想要管理的元数据对象定义一个模型，�
 
 在内部，Atlas使用图形模型保存它管理的元数据对象，这种方式提供了极大的灵活性，并且能够有效的处理不同元数据对象之间丰富的关系。`Graph Engine` 组件负责在Atlas类型系统的类型和实体之间转换，以及底层的图形持久化模型。为了管理图对象，图引擎也为元数据对象创建了合适的索引，以便他们可以方便的被检索。atlas 使用 JanusGraph 存储元数据对象。
 
-**ingest and export **
+**ingest and export**
 
 将源数据导入导出 Atlas 系统。
 
