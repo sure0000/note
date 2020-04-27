@@ -69,7 +69,7 @@ values:
     temporary:        false
 ```
 
-- GUID: 一个 entity 实例的唯一标识，当 entity 类型的对象创建时，由 atlas server生成；
+- GUID: 一个 entity 实例的唯一标识，当 entity 类型的对象创建时，由 atlas server 生成；
 - 属性值将根据属性的数据类型而定，entity 类型的属性会拥有 type AtlasObjectId 的值。
 
 Entity and Struct 都是有其他类型的属性组成的，它们的区别如下：

@@ -46,3 +46,34 @@ Metacat也会保存数据集的业务和用户定义元数据。我们目前使�
 **Hive Metastore优化**
 
 由RDS支持的Hive Metastore在高负载下表现不佳。我们已经注意到，在使用元数据存储API写入和读取分区方面存在很多问题。为此，我们不再使用这些API。我们对Hive连接器（在读写分区时，该连接器直接与RDS通信）进行了改进。之前，添加数千个分区的Hive Metastore调用通常会超时，在重新实现后，这不再是个问题。
+
+
+## Metacat API
+
+**index-controller**
+
+索引控制器
+
+**metacat-controller** 
+
+联合元数据操作
+
+**metacat-error-controller**
+
+Metacat 错误控制器
+
+**metadata-controller** 
+
+联合用户元数据操作
+
+**partition-controller** 
+
+联合分区元数据操作
+
+**resolver-controller** 
+
+元数据解析器操作
+
+**tag-controller** 
+
+联合元数据标签操作
