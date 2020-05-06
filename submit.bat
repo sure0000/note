@@ -1,5 +1,3 @@
-
-set currentTime = %date% %time%
 git add .
-git commit -m '%currentTime%'
+git commit -m "windows"
 git push origin master
