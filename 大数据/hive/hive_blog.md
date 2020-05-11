@@ -1,15 +1,5 @@
 # hive详解
 
-> 参考来源：
->
-> https://juejin.im/post/5b2c5c4d51882574af2813a0
->
-> https://blog.csdn.net/haramshen/article/details/52606666
->
-> https://blog.csdn.net/zhoudaxia/article/details/8855937
->
-> https://www.cnblogs.com/qingyunzong/p/8707885.html
-
 本文内容：
 
 1. hive的产生背景；
@@ -25,7 +15,9 @@
 
 hive提供了类SQL的HSQL给用户进行查询操作，使得传统数据库从业人员可以很快的上手，那么hive对一个用HSQL编写的查询任务是如何进行处理的呢？先看hive的整体架构图：
 
-<img src="https://user-images.githubusercontent.com/18415138/47426845-0d80b980-d7c1-11e8-825e-e39f35bd648f.png" height="300px">
+<div align="center">
+    <img src="../../zzzimg/hadoop/hive架构.png" width="50%">
+</div>
 
 **CLI** :命令行操作接口；
 
@@ -39,13 +31,17 @@ hive提供了类SQL的HSQL给用户进行查询操作，使得传统数据库从
 
 其中最核心的部分为**MetaStore**与**Driver**，由于元数据的量不会发展成海量所以metastore通常使用mysql进行持久化存储，driver主要的工作如下图所示：
 
-<img src="https://user-images.githubusercontent.com/18415138/47427906-4e2e0200-d7c4-11e8-91fa-dd1890f47630.png" height="400px">
+<div align="center">
+    <img src="../../zzzimg/hadoop/hive编译器.png" width="50%">
+</div>
 
 ## hive工作流程
 
 下图描绘了从输入HSQL语句到hive执行后返回结构的全部流程：
 
-<img src="https://user-images.githubusercontent.com/18415138/47428315-7a964e00-d7c5-11e8-9076-d330c6931248.png" height="300px">
+<div align="center">
+    <img src="../../zzzimg/hadoop/HSQL执行流程.jpg">
+</div>
 
 以下为执行说明：
 
@@ -96,4 +92,10 @@ Hive 中的表分为内部表、外部表、分区表和 Bucket 表**内部表�
 **分区表和分桶表的区别：** 
 
 　　Hive 数据表可以根据某些字段进行分区操作，细化数据管理，可以让部分查询更快。同 时表和分区也可以进一步被划分为 Buckets，分桶表的原理和 MapReduce 编程中的 HashPartitioner 的原理类似。分区和分桶都是细化数据管理，但是分区表是手动添加区分，由于 Hive 是读模式，所 以对添加进分区的数据不做模式校验，分桶表中的数据是按照某些分桶字段进行 hash 散列 形成的多个文件，所以数据的准确性也高很多
+
+**参考来源：**  
+> https://juejin.im/post/5b2c5c4d51882574af2813a0  
+> https://blog.csdn.net/haramshen/article/details/52606666  
+> https://blog.csdn.net/zhoudaxia/article/details/8855937  
+> https://www.cnblogs.com/qingyunzong/p/8707885.html
 
