@@ -1,0 +1,27 @@
+{
+    "tableName": "t1",
+    "schemaName": "default",
+    "rowKeyFormat": "xwhat,xwho",
+    "describe": "Table for test!",
+    "rowKeySeparator": "-",
+    "rowKeyFirstCharRange": "a~z,0~9",
+    "columns": [{
+      "family": "",
+      "columnName": "rowkey",
+      "comment": "The RowKey column of table!",
+      "type": "varchar",
+      "isRowKey": true
+    }, {
+      "family": "f",
+      "columnName": "xwho",
+      "comment": "Column for test!",
+      "type": "varchar",
+      "isRowKey": false
+    }, {
+      "family": "f",
+      "columnName": "ds",
+      "comment": "Column for test!",
+      "type": "varchar",
+      "isRowKey": false
+    }]
+  }
