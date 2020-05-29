@@ -1,4 +1,6 @@
-针对 ES 中的数组类型,需要在 index 的 mapping 的 `_meta.presto` 中标记出来：
+## 针对 ES 中的数组类型
+
+需要在 index 的 mapping 的 `_meta.presto` 中标记出来：
 
 ```
 curl --request PUT \
@@ -20,3 +22,7 @@ curl --request PUT \
     }
 }'
 ```
+
+## 针对 Hbase phoenix 
+
+仅支持 Phoenix 4.14.1 以上的版本
