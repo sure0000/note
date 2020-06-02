@@ -131,3 +131,77 @@ Referenceable和Asset的目的是为建模者提供在定义和查询自己类�
 - Infrastructure: 这种类型继承Asset，通常可以用作基础元数据对象（如集群、主机等）的通用超级类型。
 - DataSet: 此类型继承Referenceable。从概念上讲，它可以用来表示存储数据的类型。扩展数据集的类型可以期望有一个Schema，因为它们将有一个定义该数据集属性的属性。
 - Process: 这种类型继承Asset,从概念上讲，它可以用来表示任何数据转换操作。例如，将包含原始数据的hive_table转换为存储某些聚合的另一个hive_table的ETL进程可以是继承 Process type 的特定类型。Process type 有两个特定属性：输入和输出。输入和输出都是DataSet实体的数组。因此，Process type 的实例可以使用这些输入和输出来捕获 DataSet 血缘是如何演变。
+
+
+# Classification Propagation
+
+分类传播使与实体关联的分类能够自动与实体的其他相关实体关联,这在处理数据集从其他数据集（如文件中加载数据的表、从表/视图生成的报表等）派生数据时非常有用.
+
+## 用例
+
+考虑下面的血缘，其中来自“hdfs_path”实体的数据被加载到表中，表进一步通过视图提供。
+
+将分类“PII”添加到“hdfs_path”实体时，该分类将传播到血缘路径中的所有受影响实体，包括“employees”表、视图“us_employees”和“uk_employees”，而之后对分类“PII”的任何操作，都将传播到血缘路径中的所有受影响实体。
+
+
+# Glossary
+
+词汇表为业务用户提供适当的词汇表，并允许术语（单词）相互关联和分类，以便在不同的上下文中理解它们。然后，这些术语可以映射到诸如数据库、表、列等资产。这有助于抽象与存储库相关的技术术语，并允许用户发现/使用他们更熟悉的词汇表中的数据。
+
+## 用例
+
+- 能够使用自然术语（技术术语和/或业务术语）定义丰富的词汇表词汇。
+- 能够在语义上把术语联系起来。
+- 能够将资产映射到词汇表术语。
+- 能够按类别组织这些术语。这将为术语添加更多上下文。
+- 允许类别按层次结构排列-以表示更广泛和更精细的范围。
+- 将术语表术语与元数据分开管理。
+
+## What is a Glossary term ?
+
+term 是一个对企业有用的词。为了使 terms 有用和有意义，它们需要围绕其用途和上下文进行分组.Atlas中的 terms 必须具有唯一的限定名，可以有同名的 term，但它们不能属于同一 glossary.
+
+## What is a Glossary category ?
+
+类别是组织 terms 的一种方式，以便可以丰富术语的上下文。类别可能包含层次结构，也可能不包含层次结构，即子类别层次结构。类别的qualifiedName是使用其在词汇表中的分层位置派生的，例如category name.parent category qualifiedName。当发生任何层次结构更改（例如添加父类别、删除父类别或更改父类别）时，将更新此限定名称。
+
+
+# Notifications
+
+## Notifications from Apache Atlas
+
+Apache Atlas向名为Atlas_ENTITIES的Kafka主题发送有关元数据更改的通知。对元数据更改感兴趣的应用程序可以监视这些通知。例如，Apache Ranger处理这些通知以根据分类授权数据访问。
+
+`ApacheAtlas1.0发送以下元数据操作的通知。`
+
+```yaml
+ENTITY_CREATE:         sent when an entity instance is created
+      ENTITY_UPDATE:         sent when an entity instance is updated
+      ENTITY_DELETE:         sent when an entity instance is deleted
+      CLASSIFICATION_ADD:    sent when classifications are added to an entity instance
+      CLASSIFICATION_UPDATE: sent when classifications of an entity instance are updated
+      CLASSIFICATION_DELETE: sent when classifications are removed from an entity instance
+```
+
+`通知包含以下数据`
+
+```yaml
+AtlasEntity  entity;
+   OperationType operationType;
+   List<AtlasClassification>  classifications;
+```
+
+## Notifications to Apache Atlas
+
+Apache Atlas可以通过通知名为Atlas_HOOK的Kafka主题来通知元数据更改和沿袭。Apache Hive/Apache HBase/Apache Storm/Apache Sqoop的Atlas钩子使用此机制将感兴趣的事件通知Apache Atlas。
+
+```yaml
+ENTITY_CREATE            : create an entity. For more details, refer to Java class HookNotificationV1.EntityCreateRequest
+ENTITY_FULL_UPDATE       : update an entity. For more details, refer to Java class HookNotificationV1.EntityUpdateRequest
+ENTITY_PARTIAL_UPDATE    : update specific attributes of an entity. For more details, refer to HookNotificationV1.EntityPartialUpdateRequest
+ENTITY_DELETE            : delete an entity. For more details, refer to Java class HookNotificationV1.EntityDeleteRequest
+ENTITY_CREATE_V2         : create an entity. For more details, refer to Java class HookNotification.EntityCreateRequestV2
+ENTITY_FULL_UPDATE_V2    : update an entity. For more details, refer to Java class HookNotification.EntityUpdateRequestV2
+ENTITY_PARTIAL_UPDATE_V2 : update specific attributes of an entity. For more details, refer to HookNotification.EntityPartialUpdateRequestV2
+ENTITY_DELETE_V2         : delete one or more entities. For more details, refer to Java class HookNotification.EntityDeleteRequestV2
+```

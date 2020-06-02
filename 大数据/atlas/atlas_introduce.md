@@ -37,7 +37,7 @@
 ## 架构
 
 <div align="center">
-    <img src="../zzzimg/hadoop/atlas-architecture.png" width="50%" />
+    <img src="../../zzzimg/hadoop/atlas-architecture.png" width="50%" />
 </div>
 
 ## core
