@@ -6,7 +6,7 @@ IOC 是对象定义其依赖的过程，定义的方式仅能通过构造参数�
 
 ## IOC/DI 的好处
 
-使用 DI 原则代码会跟家干净，当对象具有依赖关系时，解耦更加有效，对象不查找其依赖项，也不知道其依赖项的位置或类。因此类变得更加容易测试，特别是当依赖项是接口或抽象基类时。这些接口或抽象类允许在单元测试中使用 sub 或 mock implemenation。
+使用 DI 原则代码会更加干净，当对象具有依赖关系时，解耦更加有效，对象不查找其依赖项，也不知道其依赖项的位置或类。因此类变得更加容易测试，特别是当依赖项是接口或抽象基类时。这些接口或抽象类允许在单元测试中使用 sub 或 mock implemenation。
 
 ## IOC 容器
 
@@ -25,4 +25,6 @@ ApplicationContext 接口代表 Spring IOC Container, 并且负责实例化、�
 
 ## IOC Container 架构
 
-![](https://docs.spring.io/spring-framework/docs/current/spring-framework-reference/images/container-magic.png)
+<div align="center">
+    <img src="../../zzzimg/java/container-magic.png" width="50%">
+</div>
