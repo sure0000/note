@@ -2,6 +2,8 @@
 
 IOC（Inversion of Control）即“控制反转”，不是什么技术，而是一种设计思想。DI（Dependency Injection）即“依赖注入”，它们是同一个概念的不同角度描述。
 
+Dependency injection is a design pattern wherein classes declare their dependencies as arguments instead of creating those dependencies directly. For example, a client that wishes to call a service should not have to know how to construct the service, rather, some external code is responsible for providing the service to the client.
+
 IOC 是对象定义其依赖的过程，定义的方式仅能通过构造参数、工厂方法参数，或者是对象被构造成从工厂方法返回之后设定在对象实例上的属性。然后由 IOC 容器在创建 bean 时将这些依赖注入。
 
 ## IOC/DI 的好处
