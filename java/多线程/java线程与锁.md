@@ -10,7 +10,7 @@ java 内存模型的主要目标是定义程序中各个变量的访问规则，
 java 内存模型规定了所有的变量存储在主内存中，每条线程还有自己的工作内存，线程的工作内存中保存了被该线程使用到的变量的主内存副本拷贝，线程对变量的所有操作都必须在工作内存中进行，而不能直接读写主内存中额变量。
 
 <div align="center">
-    <img src="../zzzimg/java/javaMem.png" width="50%">
+    <img src="../../zzzimg/java/javaMem.png" width="50%">
 </div>
 
 - 内存模型的8种操作: lock unlock read load use assign store write
@@ -31,7 +31,7 @@ java 内存模型规定了所有的变量存储在主内存中，每条线程还
 程序一般不会直接使用内核线程，而是使用内核线程的高级接口，轻量级进程（Light Weight Process, LWP)，轻量级进程就是通常意义上所讲的线程，轻量级进程与内核线程之间1：1的关系称作一对一的线程模型，如下图：
 
 <div align="center">
-    <img src="../zzzimg/java/LWT.png" width="50%">
+    <img src="../../zzzimg/java/LWT.png" width="50%">
 </div>
 
 局限：
@@ -50,7 +50,7 @@ java 内存模型规定了所有的变量存储在主内存中，每条线程还
 内核线程与用户线程一起使用的实现方式，既存在用户线程，也存在轻量级进程。用户线程还是完全建立在用户空间，操作依然廉价，并且支持大规模的用户线程并发。而操作系统提供支持的轻量级进程作为用户线程和内核线程之间的桥梁，通过内核来管理线程。在这种混合模式中，用户线程与轻量级进程的数量比是 M : N 的关系，如下图：
 
 <div align="center">
-    <img src="../zzzimg/java/mix.png" width="50%">
+    <img src="../../zzzimg/java/mix.png" width="50%">
 </div>
 
 ### java 线程调度
@@ -86,7 +86,7 @@ Java语言定义了5种线程状态，在任意一个时间点，一个线程只
 - `结束（Terminated）`：已终止线程的线程状态，线程已经结束执行。
 
 <div align="center">
-    <img src="../zzzimg/java/thread state.png" width="50%">
+    <img src="../../zzzimg/java/thread state.png" width="50%">
 </div>
 
 **线程安全**
@@ -165,7 +165,7 @@ HotSpot虚拟机的对象头（Object Header）分为两部分信息:
 - 另外一部分用于存储指向方法区对象类型数据的指针，如果是数组对象的话，还会有一个额外的部分用于存储数组长度。
 
 <div align="center">
-    <img src="../zzzimg/java/mark word.png">
+    <img src="../../zzzimg/java/mark word.png">
 </div>
 
 `轻量级锁加锁过程`
@@ -181,7 +181,7 @@ HotSpot虚拟机的对象头（Object Header）分为两部分信息:
 5. 如果这个更新操作失败了，虚拟机首先会检查对象的Mark Word是否指向当前线程的栈帧，如果是就说明当前线程已经拥有了这个对象的锁，那就可以直接进入同步块继续执行。否则说明多个线程竞争锁，轻量级锁就要膨胀为重量级锁，锁标志的状态值变为“10”，Mark Word中存储的就是指向重量级锁（互斥量）的指针，后面等待锁的线程也要进入阻塞状态。 而当前线程便尝试使用自旋来获取锁，自旋就是为了不让线程阻塞，而采用循环去获取锁的过程。
 
 <div align="center">
-    <img src="../zzzimg/java/light%20lock.png">
+    <img src="../../zzzimg/java/light%20lock.png">
 </div>
 
 `轻量级锁解锁过程`
@@ -195,7 +195,7 @@ HotSpot虚拟机的对象头（Object Header）分为两部分信息:
 `偏向锁获取过程`
 
 1. 访问Mark Word中偏向锁的标识是否设置成1，锁标志位是否为01——确认为可偏向状态。
-        
+
 2. 如果为可偏向状态，则测试线程ID是否指向当前线程，如果是，进入步骤（5），否则进入步骤（3）。
 
 3. 如果线程ID并未指向当前线程，则通过CAS操作竞争锁。如果竞争成功，则将Mark Word中线程ID设置为当前线程ID，然后执行（5）；如果竞争失败，执行（4）。
@@ -209,7 +209,7 @@ HotSpot虚拟机的对象头（Object Header）分为两部分信息:
 偏向锁的撤销在上述第四步骤中有提到。偏向锁只有遇到其他线程尝试竞争偏向锁时，持有偏向锁的线程才会释放锁，线程不会主动去释放偏向锁。偏向锁的撤销，需要等待全局安全点（在这个时间点上没有字节码正在执行），它会首先暂停拥有偏向锁的线程，判断锁对象是否处于被锁定状态，撤销偏向锁后恢复到未锁定（标志位为“01”）或轻量级锁（标志位为“00”）的状态。
 
 <div align="center">
-    <img src="../zzzimg/java/Bias%20lock.png">
+    <img src="../../zzzimg/java/Bias%20lock.png">
 </div>
 
 偏向锁可以提高带有同步但无竞争的程序性能。它同样是一个带有效益权衡（Trade Off）性质的优化，也就是说，它并不一定总是对程序运行有利，如果程序中大多数的锁总是被多个不同的线程访问，那偏向模式就是多余的。在具体问题具体分析的前提下，有时候使用参数-XX:-UseBiasedLocking来禁止偏向锁优化反而可以提升性能。
