@@ -82,7 +82,7 @@ public class ConnectDistributed {
 
 ## 启动一个 connector
 
-Connector 类中的 start() 执行了 DistributedHerder 的 start() 函数，从而提交了异步的 trick() 函数，代码如下：
+ConnectDistributed 类中调用 Connector 类的 start() 函数， 从而执行了 DistributedHerder 的 start() 函数，从而提交了异步的 trick() 函数，代码如下：
 ```java
 // DistributedHerder.java
 
