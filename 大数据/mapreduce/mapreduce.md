@@ -7,19 +7,19 @@
 mapreduce 基于“映射”与“归约”的思想，将一堆杂乱无序的数据根据某种特征归纳起来，并行处理之后得到最终的结果。`mapreduce 的编程思想是用于解决一个大问题可以分解为多个小问题，并且这些小问题相互独立的场景，所有的小问题处理完大问题也将处理完成`。如下图所示：
 
 <div align="center">
-    <img src="../zzzimg/hadoop/mapreduer1.png" width="50%" />
+    <img src="../../zzzimg/hadoop/mapreduer1.png" width="50%" />
 </div>
 
 Map 任务与 Reduce 任务的连接是由中间的 Shuffle 过程完成。Shuffle 过程中，Map 任务处理完的数据经过 `collect(收集)、 sort (排序) 、spill(溢写)、merge(合并)`步骤写入到磁盘文件中，reduce 任务则将对应的磁盘文件进行 `copy、merge sort` 步骤拷贝到指定主机进行合并排序，以此完成数据的处理。如下图所示：
 
 <div align="center">
-    <img src="../zzzimg/hadoop/mapreduce2.png" width="50%" />
+    <img src="../../zzzimg/hadoop/mapreduce2.png" width="50%" />
 </div>
 
 ### Map 任务端 shuffle
 
 <div align="center">
-    <img src="../zzzimg/hadoop/mapshuffle.png" width="50%" />
+    <img src="../../zzzimg/hadoop/mapshuffle.png" width="50%" />
 </div>
 
 **Collect**
@@ -39,7 +39,7 @@ Spill线程为这次Spill过程创建一个磁盘文件：从所有的本地目�
 Map任务如果输出数据量很大，可能会进行好几次Spill，out文件和Index文件会产生很多，分布在不同的磁盘上，所以需要 merge 过程。每个partition对应一个段列表，记录所有的Spill文件中对应的这个partition那段数据的文 件名、起始位置、长度等等。然后对这个partition对应的所有的segment进行合并，目标是合并成一个segment。当这个 partition对应很多个segment时，会分批地进行合并：先从segment列表中把第一批取出来，以key为关键字放置成最小堆，然后从最小 堆中每次取出最小的输出到一个临时文件中，这样就把这一批段合并成一个临时的段，把它加回到segment列表中；再从segment列表中把第二批取出 来合并输出到一个临时segment，把其加入到列表中；这样往复执行，直到剩下的段是一批，输出到最终的文件中。
 
 <div align="center">
-    <img src="../zzzimg/hadoop/merge.png" width="50%" />
+    <img src="../../zzzimg/hadoop/merge.png" width="50%" />
 </div>
 
 ### reduce 端 shuffle
@@ -74,13 +74,13 @@ Reduce任务拖取某个Map 对应的数据，如果在内存中能放得下这�
 每一个Mapper会根据Reducer的数量创建出相应的bucket，bucket的数量是`(M * R)` ，其中M是Map的个数，R是Reduce的个数。这样会产生大量的小文件，对文件系统压力很大，而且也不利于IO吞吐量，如下图：
 
 <div align="center">
-    <img src="../zzzimg/spark/Hash&#32;Based&#32;Shuffle.jpg" width="50%" />
+    <img src="../../zzzimg/spark/Hash&#32;Based&#32;Shuffle.jpg" width="50%" />
 </div>
 
 优化后，使用 Consolidation机制，把在统一core上运行的多个Mapper 输出的合并到同一个文件，这样文件数目就变成了` (cores * R)` 个,`cores 为 CPU 核数`,如下图：
 
 <div align="center">
-    <img src="../zzzimg/spark/Consolidation.jpg" width="50%" />
+    <img src="../../zzzimg/spark/Consolidation.jpg" width="50%" />
 </div>
 
 ### spark 2.1 版本的 shuffle
@@ -90,7 +90,7 @@ Reduce任务拖取某个Map 对应的数据，如果在内存中能放得下这�
 现在2.1 分为三种writer， 分为 BypassMergeSortShuffleWriter， SortShuffleWriter 和 UnsafeShuffleWriter，使用条件如下图：
 
 <div align="center">
-    <img src="../zzzimg/spark/writer.jpg" width="50%" />
+    <img src="../../zzzimg/spark/writer.jpg" width="50%" />
 </div>
 
 上面是使用哪种 writer 的判断依据， 是否开启 mapSideCombine 这个判断，是因为有些算子会在 map 端先进行一次 combine， 减少传输数据。 因为 BypassMergeSortShuffleWriter 会临时输出Reducer个（分区数目）小文件，所以分区数必须要小于一个阀值 `spark.shuffle.sort.bypassMergeThreshold，默认是小于200。`
@@ -104,7 +104,7 @@ UnsafeShuffleWriter需要Serializer支持relocation，Serializer支持relocation
 BypassMergeSortShuffleWriter和Hash Shuffle中的HashShuffleWriter实现基本一致， 唯一的区别在于，map端的多个输出文件会被汇总为一个文件。 所有分区的数据会合并为同一个文件，会生成一个索引文件，是为了索引到每个分区的起始地址，可以随机 access 某个partition的所有数据。
 
 <div align="center">
-    <img src="../zzzimg/spark/BypassMergeSortShuffleWriter.jpg" width="50%" />
+    <img src="../../zzzimg/spark/BypassMergeSortShuffleWriter.jpg" width="50%" />
 </div>
 
 `需要注意的是，这种方式不宜有太多分区，因为过程中会并发打开所有分区对应的临时文件，会对文件系统造成很大的压力。`

@@ -3,7 +3,7 @@
 ## job 执行流程
 
 <div align="center">
-    <img src="../zzzimg/spark/spark&#32;job.jpeg" />
+    <img src="../../zzzimg/spark/spark&#32;job.jpeg" />
 </div>
 
 在任务执行的过程中，其他组件协同工作，确保整个应用顺利执行。
@@ -20,7 +20,7 @@
 ## spark job 在 yarn 中执行流程
 
 <div align="center">
-    <img src="../zzzimg/spark/spark&#32;job&#32;detail.jpeg" width="50%" />
+    <img src="../../zzzimg/spark/spark&#32;job&#32;detail.jpeg" width="50%" />
 </div>
 
 在 Yarn-Cluster 模式中，当用户向 Yarn 中提交一个应用程序后， Yarn 将分两个阶段运行该应用程序：第一个阶段是把 Spark 的 Driver 作为一个 ApplicationMaster 在 Yarn 集群中先启动；第二个阶段是由 ApplicationMaster 创建应用程序，然后为它向 ResourceManager 申请资源，并启动 Executor 来运行 Task，同时监控它的整个运行过程，直到运行完成。
@@ -38,7 +38,7 @@
 DAG，有向无环图，Directed Acyclic Graph的缩写，常用于建模。Spark中使用DAG对RDD的关系进行建模，描述了RDD的依赖关系，这种关系也被称之为lineage，RDD的依赖关系使用Dependency维护，DAG在Spark中的对应的实现为DAGScheduler。
 
 <div align="center">
-    <img src="../zzzimg/spark/dagTask.png" width="50%" />
+    <img src="../../zzzimg/spark/dagTask.png" width="50%" />
 </div>
 
 **DAGScheduler作用**
